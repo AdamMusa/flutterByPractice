@@ -1,100 +1,169 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'signup.dart';
+
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'LoginPage',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: MyStateApp(),
+      routes: <String, WidgetBuilder>{
+        '/signup': (BuildContext context) => new SignupPage()
+      },
+      home: new MyHomePage(),
     );
   }
 }
 
-class MyStateApp extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _MyStateAppState createState() => _MyStateAppState();
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyStateAppState extends State<MyStateApp> {
-  final _formkey = GlobalKey<FormState>();
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Login',
-          textScaleFactor: 2.0,
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            color: Colors.black54,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: new Center(child:Container(
-        margin: EdgeInsets.all(16.0),
-        color: Colors.blueAccent,
-        height: 200.0,
-        width: 400.0,
-        child: new Card(
-          elevation: 0.5,
-          child: Form(
-            key: _formkey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  autofocus: true,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Le champs ci est requit';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Le champs ci est requit';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: RaisedButton(
-                    onPressed: () {
-                      // Validate returns true if the form is valid, or false
-                      // otherwise.
-                      if (_formkey.currentState.validate()) {
-                        // If the form is valid, display a Snackbar.
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Processing Data')));
-                      }
-                    },
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+    return new Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                    child: Text('Login',
+                        style: TextStyle(
+                            fontSize: 50.0, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'EMAIL',
+                          labelStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+                    ),
+                    SizedBox(height: 10.0),
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'PASSWORD',
+                          labelStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 5.0),
+                    Container(
+                      alignment: Alignment(1.0, 0.0),
+                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                      child: InkWell(
+                        child: Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                              decoration: TextDecoration.underline),
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(height: 30.0),
+                    Container(
+                      height: 40.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: Colors.greenAccent,
+                        color: Colors.blue,
+                        elevation: 2.0,
+                        child: GestureDetector(
+                          onTap : (){
+                            print('there');
+                          },
+                          child: Center(
+                            child: Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      height: 40.0,
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.blue,
+                                style: BorderStyle.solid,
+                                width: 1.0),
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Center(
+                              child:
+                                  ImageIcon(AssetImage('assets/facebook.png')),
+                            ),
+                            SizedBox(width: 10.0),
+                            Center(
+                              child: Text('Log in with facebook',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat')),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+            SizedBox(height: 15.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Signup ?',
+                  style: TextStyle(fontFamily: 'Montserrat'),
                 ),
+                SizedBox(width: 5.0),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/signup');
+                  },
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                )
               ],
-            ),
-          ),
-        ),
-      ),
-      ),
-    );
+            )
+          ],
+        ));
   }
 }
